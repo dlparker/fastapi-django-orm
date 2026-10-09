@@ -2,7 +2,6 @@ import pytest
 
 from app.core.models import User
 
-
 pytestmark = [pytest.mark.django_db(transaction=True), pytest.mark.asyncio]
 
 

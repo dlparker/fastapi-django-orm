@@ -2,7 +2,6 @@ from fastapi import APIRouter
 
 from app.core.models import User
 
-
 router = APIRouter()
 
 

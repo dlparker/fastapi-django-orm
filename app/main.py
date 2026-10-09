@@ -20,9 +20,17 @@ def get_asgi_application():
 application = get_asgi_application()
 
 from app.core.api import router  # noqa: E402
+from app.db import DjangoDBMiddleware  # noqa: E402
 
 fast = FastAPI(title="My app", openapi_url=f"/openapi.json")
+fast.add_middleware(DjangoDBMiddleware)
 fast.include_router(router)
-fast.mount("/static", StaticFiles(directory="static"), name="static")
+# Serves the project's static/ directory plus the Django admin's static files
+fast.mount(
+    "/static",
+    StaticFiles(directory="static", packages=[("django.contrib.admin", "static")]),
+    name="static",
+)
+# Django views, including the admin at /d/admin/ (see config/urls.py)
 fast.mount("/d", application)
 templates = Jinja2Templates(directory="templates")

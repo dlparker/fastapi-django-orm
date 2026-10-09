@@ -7,8 +7,7 @@ import uvicorn
 
 
 @click.group()
-def run():
-    ...
+def run(): ...
 
 
 @click.command("run", help="Runs the FastAPI server")
@@ -24,17 +23,16 @@ def run():
     type=click.Choice(["debug", "info", "warning", "error"]),
 )
 @click.option("--reload", is_flag=True, default=False)
-@click.option("--settings", default="production")
+@click.option(
+    "--settings",
+    default="production",
+    type=click.Choice(["local", "production"]),
+)
 def run_fast(host, port, log_level, reload, settings: str):
     # Turn off bytecode generation
     import sys
 
     sys.dont_write_bytecode = True
-    if settings not in {"production", "staging", "local"}:
-        raise ValueError(
-            f"Invalid settings value: {settings}."
-            "Must be one of: production, staging, or local"
-        )
     os.environ["DJANGO_SETTINGS_MODULE"] = f"config.settings.{settings}"
 
     uvicorn.run(
@@ -43,7 +41,7 @@ def run_fast(host, port, log_level, reload, settings: str):
         port=port,
         log_level=log_level,
         reload=reload,
-        reload_includes=["app", "config", "manage.py"],
+        reload_includes=["app", "config", "manage.py"] if reload else None,
     )
 
 
