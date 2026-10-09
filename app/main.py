@@ -4,8 +4,6 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from app.core.api import router
-
 
 def get_asgi_application():
     """
@@ -18,7 +16,11 @@ def get_asgi_application():
     return ASGIHandler()
 
 
+# Django must be set up before importing anything that touches models
 application = get_asgi_application()
+
+from app.core.api import router  # noqa: E402
+
 fast = FastAPI(title="My app", openapi_url=f"/openapi.json")
 fast.include_router(router)
 fast.mount("/static", StaticFiles(directory="static"), name="static")
