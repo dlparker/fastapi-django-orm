@@ -1,9 +1,9 @@
 exclude: "^docs/|/migrations/|/.git/|/.tox/|/media/|/.pytest_cache/|/.idea/"
-default_stages: [commit]
+default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -21,18 +21,18 @@ repos:
         exclude: ^examples|(?:tests/ssl)/
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.34.0
+    rev: v3.22.0
     hooks:
       - id: pyupgrade
         args: ['--py310-plus', '--keep-mock']
 
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 26.10.0
     hooks:
       - id: black
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
+    rev: 9.0.2
     hooks:
       - id: isort
 
