@@ -5,5 +5,5 @@ from app.main import fast
 
 
 @pytest.fixture()
-def client() -> AsyncClient:
+def api_client() -> AsyncClient:
     return AsyncClient(transport=ASGITransport(app=fast), base_url="http://testserver")

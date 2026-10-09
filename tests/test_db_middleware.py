@@ -7,7 +7,7 @@ from django.core import signals
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 
-from app.core.models import User
+from app.core.models import Client
 from app.db import DjangoDBMiddleware
 
 pytestmark = [pytest.mark.django_db(transaction=True), pytest.mark.asyncio]
@@ -39,7 +39,7 @@ def probe_client(recorder) -> AsyncClient:
     @app.get("/probe")
     async def probe():
         def query():
-            User.objects.count()
+            Client.objects.count()
             return threading.get_ident()
 
         recorder.append(("orm", await sync_to_async(query)()))

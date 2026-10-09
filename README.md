@@ -56,14 +56,15 @@ and fills in the gaps that matter when building a real project on it.
   on every request because there was no URLconf. It now serves the Django
   admin at `/d/admin/` (sessions, CSRF and login all work under the `/d`
   prefix), with the admin's static files served by FastAPI. The sample
-  `User` model is registered in the admin.
-- **Pydantic schema example.** A `/users` API
-  ([`app/core/api/users.py`](./app/core/api/users.py),
+  model, renamed from `User` to `Client` so it isn't confused with Django's
+  built-in `auth.User`, is registered in the admin.
+- **Pydantic schema example.** A `/clients` API
+  ([`app/core/api/clients.py`](./app/core/api/clients.py),
   [`app/core/schemas.py`](./app/core/schemas.py)) shows the glue most
   projects need: validating input with a Pydantic model and returning Django
   model instances through a `from_attributes` response model.
 - **Tests.** 12 tests (up from 2) covering the middleware's threading and
-  cleanup, the `/users` API and an admin login. They pass on both SQLite and
+  cleanup, the `/clients` API and an admin login. They pass on both SQLite and
   PostgreSQL.
 - **Tooling.**
   - `--settings` only offers `local` and `production` (`staging` was
